@@ -11,7 +11,7 @@ jobs:
     - run: npm install
     - run : node app.js
     - name: Set up Docker Buildx
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v3
     - name: Build Docker image
       uses: docker/build-push-action@v3
 
