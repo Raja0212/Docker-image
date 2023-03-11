@@ -12,8 +12,5 @@ jobs:
     - run : node app.js
 
       
- //   - name: Build Docker image
-  //      working-directory: Docker-image 
-   //     run: docker build . --Dockerfile --tag node-docker:(date +%s)
-    
+
 
