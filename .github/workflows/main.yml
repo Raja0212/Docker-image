@@ -16,5 +16,8 @@ jobs:
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag node-dock
+      with: 
+        context: .
+        push: true
 
 
