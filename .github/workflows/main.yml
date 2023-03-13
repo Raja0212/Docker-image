@@ -12,8 +12,23 @@ jobs:
     - run : node app.js
 
 
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag node-dock
+#     - name: Build the Docker image
+#       run: docker build . --file Dockerfile --tag node-dock
+      
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      
+      
+            with:
+        context: .
+        push: false
+        tags: node-dock:latest
+        dockerfile: Dockerfile
+      
+      
      
 
 
