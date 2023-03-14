@@ -27,7 +27,8 @@ jobs:
         login-server: cicdpipeline.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
-    - name: Build and push image
+        
+    - name: Build and push images
       run: |
         docker build -t cicdpipeline.azurecr.io/node:latest .
         docker push cicdpipeline.azurecr.io/node:latest
