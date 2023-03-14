@@ -1,35 +1,37 @@
-on: push
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
-  build-node:
+
+  build:
+
     runs-on: ubuntu-latest
-    container: node:16
+
     steps:
-    - run : node --version
-    - run : npm --version
-    - uses: actions/checkout@v3 
-    - run: npm install
-    - run : node app.js
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Login to ACR
+      uses: azure/docker-login@v1
+      with:
+        login-server: cicdpipeline.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    - name: Build and push image
+      run: |
+        docker build -t cicdpipeline.azurecr.io/node:latest .
+        docker push cicdpipeline.azurecr.io/node:latest
+        
+      
 
 
-#     - name: Build the Docker image
-#       run: docker build . --file Dockerfile --tag node-dock
-      
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v3
-      
-      
-            with:
-        context: .
-        push: false
-        tags: node-dock:latest
-        dockerfile: Dockerfile
-      
-      
-     
-
-
+ 
 
